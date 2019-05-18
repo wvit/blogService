@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>上传图片</title>
+    <style lang="">
+      .wrap {
+        width: 500px;
+        margin: 100px auto;
+      }
+      .wrap div {
+        margin: 50px 0;
+
+        
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div><input type="file" class="img-file" /></div>
+      <div>请命名图片名字： <input type="text" class="img-name" /></div>
+
+      <button class="img-upload">上传图片</button>
+    </div>
+  </body>
+  <script>
+    const imgFile = document.querySelector(".img-file");
+    const imgName = document.querySelector(".img-name");
+    const imgUpload = document.querySelector(".img-upload");
+    let file = null;
+
+    imgFile.addEventListener("change", ev => {
+      let reader = new FileReader();
+      reader.readAsDataURL(imgFile.files[0]);
+      reader.addEventListener("load", ev => {
+        file = ev.target.result;
+      });
+    });
+
+    imgUpload.addEventListener("click", () => {
+      if (file) {
+        let xhr = new XMLHttpRequest();
+        let data = {
+          file,
+          name: imgName.value
+        };
+
+        xhr.open("POST", "http://10.100.115.145:1999/uploadImg", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.addEventListener("readystatechange", () => {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);  
+            file = null;
+            imgName.value = "";
+          }
+        });
+
+        xhr.send(JSON.stringify(data));
+      }
+    });
+  </script>
+</html>
