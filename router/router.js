@@ -1,4 +1,6 @@
-//注册
-require("./admin/signUp");
-//登陆
-require("./admin/signIn");
+//上传文件
+require('./upload/upload')
+//添加博客
+require('./blog/addBlog')
+//查询博客
+require('./blog/getBlogs')

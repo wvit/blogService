@@ -1,10 +1,19 @@
+const interfaces = require('os').networkInterfaces();
 const production = false;
 
 module.exports = {
     dbs: 'mongodb://localhost/blogDB',
     server: {
         get host() {
-            return production ? '172.27.16.14' : '10.100.115.191'
+            let address = '';
+            for (let devName in interfaces) {
+                interfaces[devName].forEach(item => {
+                    if (item.family === 'IPv4' && item.address !== '127.0.0.1') {
+                        address = item.address;
+                    }
+                })
+            }
+            return production ? '172.27.16.14' : address
         },
         get port() {
             return 1999
@@ -18,21 +27,4 @@ module.exports = {
             return 6379
         }
     },
-    smtp: {
-        get host() {
-            return 'smtp.qq.com'
-        },
-        get user() {
-            return '1083926534@qq.com'
-        },
-        get pass() {
-            return 'egedypzltaubhcae'
-        }
-    },
-    get sendCode() {
-        return () => Math.random().toString(16).slice(2, 6).toUpperCase();
-    },
-    get expire() {
-        return () => new Date().getTime() + 60 * 60 * 1000
-    }
 }
