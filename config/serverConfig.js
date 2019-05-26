@@ -13,7 +13,7 @@ module.exports = {
                     }
                 })
             }
-            return production ? '172.27.16.14' : address
+            return production ? '132.232.114.236' : address
         },
         get port() {
             return 1999
