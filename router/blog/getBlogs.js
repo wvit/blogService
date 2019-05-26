@@ -16,6 +16,7 @@ function getBlogs(reqData) {
     const page = (Number(reqData.page) - 1) * 10;
     const reg = new RegExp(reqData.key, 'i');
     const queryRule = {
+        isShow: true,
         $or: [{
             title: {
                 $regex: reg

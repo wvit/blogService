@@ -3,6 +3,10 @@ const blog = new mongoose.Schema({
     title: String,
     content: String,
     addTime: String,
+    isShow: {
+        type: Boolean,
+        default: true
+    },
     pageView: Number
 });
 
