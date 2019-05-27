@@ -1,9 +1,11 @@
 const Koa = require('koa');
 const path = require('path');
+const cors = require('koa2-cors');
 const router = require('koa-router')();
 const static = require('koa-static');
 const bodyParser = require('koa-bodyparser');
 const mongoose = require('mongoose');
+
 const {
     dbs,
     server
@@ -18,6 +20,7 @@ mongoose.connect(dbs, {
 
 const app = new Koa();
 
+app.use(cors());
 app.use(bodyParser());
 app.use(router.routes());
 app.use(static(path.join(__dirname, '../static')));
