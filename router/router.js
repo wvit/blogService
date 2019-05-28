@@ -4,3 +4,5 @@ require('./upload/upload')
 require('./blog/blogHandle')
 //查询博客
 require('./blog/getBlogs')
+//博客详情
+require('./blog/getBlogDetail')
