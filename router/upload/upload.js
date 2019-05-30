@@ -25,7 +25,7 @@ router.post("/upload", upload.single('file'), async (ctx, next) => {
     ctx.body = {
         code: 0,
         data: {
-            path: `http://${server.address}:${server.port}/uploadFiles/${filename}`,
+            path: `${server.address}/uploadFiles/${filename}`,
             filename
         }
     }

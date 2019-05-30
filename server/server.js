@@ -11,7 +11,8 @@ const sslify = require('koa-sslify').default;
 const app = new Koa();
 const {
     dbs,
-    server
+    server,
+    production
 } = require('../config/serverConfig');
 const httpsConfig = {
     key: fs.readFileSync(path.join(__dirname, '../ssl/1wei.cc.key')),
@@ -31,13 +32,17 @@ app.use(bodyParser());
 app.use(router.routes());
 app.use(static(path.join(__dirname, '../static')));
 
-//app.listen(server.port, server.host, () => {
-//    console.log('服务已启动', `${server.host}:${server.port}`)
-//});
 
-https.createServer(httpsConfig, app.callback()).listen(server.port,()=>{
-console.log('https服务已启动');
-});
+if (production) {
+    https.createServer(httpsConfig, app.callback()).listen(server.port, () => {
+        console.log('https服务已启动', `${server.address}`)
+    });
+} else {
+    app.listen(server.port, server.host, () => {
+        console.log('服务已启动', `${server.address}`)
+    });
+}
+
 
 module.exports = {
     router,

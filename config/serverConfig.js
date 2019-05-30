@@ -3,6 +3,7 @@ const production = true;
 
 module.exports = {
     dbs: 'mongodb://localhost/blogDB',
+    production,
     server: {
         //启动服务地址
         get host() {
@@ -14,15 +15,15 @@ module.exports = {
                     }
                 })
             }
-            return production ? '172.27.16.14' : address;
-        },
-        //对外地址
-        get address() {
-            return production ? '132.232.114.236' : this.host
+            return production ? '1wei.cc' : address;
         },
         //端口
         get port() {
             return 1999
+        },
+        //远程地址
+        get address() {
+            return `${production?'https':'http'}://${this.host}:${this.port}`
         }
     },
     redis: {
