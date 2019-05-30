@@ -7,15 +7,15 @@ const router = require('koa-router')();
 const static = require('koa-static');
 const bodyParser = require('koa-bodyparser');
 const mongoose = require('mongoose');
-const enforceHttps = require('koa-sslify');
+const sslify = require('koa-sslify').default;
 const app = new Koa();
 const {
     dbs,
     server
 } = require('../config/serverConfig');
 const httpsConfig = {
-    key: fs.readFileSync('../ssl/1wei.cc.key'),
-    cert: fs.readFileSync('../ssl/1wei.cc.pem')
+    key: fs.readFileSync(path.join(__dirname, '../ssl/1wei.cc.key')),
+    cert: fs.readFileSync(path.join(__dirname, '../ssl/1wei.cc.pem'))
 };
 
 mongoose.connect(dbs, {
@@ -25,7 +25,7 @@ mongoose.connect(dbs, {
     console.log(msg, dbs, err)
 });
 
-app.use(enforceHttps());
+app.use(sslify());
 app.use(cors());
 app.use(bodyParser());
 app.use(router.routes());
