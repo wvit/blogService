@@ -31,11 +31,13 @@ app.use(bodyParser());
 app.use(router.routes());
 app.use(static(path.join(__dirname, '../static')));
 
-app.listen(server.port, server.host, () => {
-    console.log('服务已启动', `${server.host}:${server.port}`)
-});
+//app.listen(server.port, server.host, () => {
+//    console.log('服务已启动', `${server.host}:${server.port}`)
+//});
 
-https.createServer(httpsConfig, app.callback()).listen(server.port);
+https.createServer(httpsConfig, app.callback()).listen(server.port,()=>{
+console.log('https服务已启动');
+});
 
 module.exports = {
     router,
