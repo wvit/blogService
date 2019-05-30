@@ -1,6 +1,7 @@
 const Koa = require('koa');
 const https = require('https');
 const path = require('path');
+const fs = require('fs');
 const cors = require('koa2-cors');
 const router = require('koa-router')();
 const static = require('koa-static');
