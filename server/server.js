@@ -10,42 +10,40 @@ const mongoose = require('mongoose');
 const sslify = require('koa-sslify').default;
 const app = new Koa();
 const {
-    dbs,
-    server,
-    production
+  dbs,
+  server,
+  production
 } = require('../config/serverConfig');
 const httpsConfig = {
-    key: fs.readFileSync(path.join(__dirname, '../ssl/1wei.cc.key')),
-    cert: fs.readFileSync(path.join(__dirname, '../ssl/1wei.cc.pem'))
+  key: fs.readFileSync(path.join(__dirname, '../ssl/1wei.cc.key')),
+  cert: fs.readFileSync(path.join(__dirname, '../ssl/1wei.cc.pem'))
 };
 
 mongoose.connect(dbs, {
-    useNewUrlParser: true
+  useNewUrlParser: true
 }, err => {
-    const msg = err ? '数据库发生错误' : '数据库链接成功';
-    console.log(msg, dbs, err)
+  const msg = err ? '数据库发生错误' : '数据库链接成功';
+  console.log(msg, dbs, err)
 });
 
-app.use(sslify());
 app.use(cors());
 app.use(bodyParser());
 app.use(router.routes());
 app.use(static(path.join(__dirname, '../static')));
 
-
 if (production) {
-    https.createServer(httpsConfig, app.callback()).listen(server.port, () => {
-        console.log('https服务已启动', `${server.address}`)
-    });
+  app.use(sslify());
+  https.createServer(httpsConfig, app.callback()).listen(server.port, () => {
+    console.log('https服务已启动', `${server.address}`)
+  });
 } else {
-    app.listen(server.port, server.host, () => {
-        console.log('服务已启动', `${server.address}`)
-    });
+  app.listen(server.port, server.host, () => {
+    console.log('服务已启动', `${server.address}`)
+  });
 }
 
-
 module.exports = {
-    router,
-    bodyParser,
-    mongoose
+  router,
+  bodyParser,
+  mongoose
 }

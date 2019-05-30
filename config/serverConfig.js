@@ -1,5 +1,5 @@
 const interfaces = require('os').networkInterfaces();
-const production = true;
+const production = false;
 
 module.exports = {
     dbs: 'mongodb://localhost/blogDB',
@@ -7,15 +7,15 @@ module.exports = {
     server: {
         //启动服务地址
         get host() {
-            let address = '';
+            let ip = '';
             for (let devName in interfaces) {
                 interfaces[devName].forEach(item => {
                     if (item.family === 'IPv4' && item.address !== '127.0.0.1') {
-                        address = item.address;
+                        ip = item.address;
                     }
                 })
             }
-            return production ? '1wei.cc' : address;
+            return production ? '1wei.cc' : ip;
         },
         //端口
         get port() {
