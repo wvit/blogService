@@ -4,7 +4,7 @@ const reqDate = new mongoose.Schema({
     userAgent: String,
     referer: String,
     reqDate: String,
-    city: Array
+    city: String
 });
 
 module.exports = mongoose.model('reqDate', reqDate);

@@ -3,7 +3,7 @@ const {
 } = require("../../server/server");
 const Blog = require('../../mongo/schema/blog');
 
-//后台获取博客请求
+//获取博客详情请求
 router.get("/app/getBlogDetail", async ctx => {
     await getBlogs(ctx.request.query).then(data => {
         ctx.body = data
