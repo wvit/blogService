@@ -17,13 +17,19 @@ function getBlogs(reqData) {
             code: 0,
             data: {}
         };
+        const _id = reqData.id
         Blog.findOne({
-                _id: reqData.id
+                _id
             })
             .exec((err, data) => {
+                const pageView = data.pageView + 1;
+                Blog.updateOne({
+                    _id
+                }, {
+                    pageView
+                }, () => {});
                 resData.data = data;
                 resolve(resData);
             })
-
     })
 }

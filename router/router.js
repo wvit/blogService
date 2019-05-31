@@ -1,3 +1,5 @@
+//统计监听所有请求
+require('./statistics/reqData');
 //上传文件
 require('./upload/upload')
 //添加博客
