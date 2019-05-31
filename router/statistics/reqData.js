@@ -10,9 +10,8 @@ router.all('*', async (ctx, next) => {
         request
     } = ctx;
     const ip = req.headers['x-forwarded-for'] || // 判断是否有反向代理 IP
-        req.connection.remoteAddress || // 判断 connection 的远程 IP
-        req.socket.remoteAddress || // 判断后端的 socket 的 IP
-        req.connection.socket.remoteAddress;
+        req.connection.remoteAddress // 判断 connection 的远程 IP
+    console.log(req.headers['x-forwarded-for'], req.connection.remoteAddress,ip)
     const userAgent = request.header['user-agent'];
     const referer = request.header['referer'];
     const reqDate = util.getDate(Date.now(), true);
