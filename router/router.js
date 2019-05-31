@@ -10,3 +10,7 @@ require('./blog/blogHandle')
 require('./blog/getBlogs')
 //博客详情
 require('./blog/getBlogDetail')
+//标签分类操作
+require('./tag/tagHandle')
+//获取标签分类
+require('./tag/getTag')

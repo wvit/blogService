@@ -24,11 +24,7 @@ function addBlog(reqData) {
         }
         reqData.addTime = getDate(Date.now(), true);
         reqData.pageView = 0;
-        new Blog(reqData).save(err => {
-            if (err) {
-                resData.code = -1;
-                resData.data = '注册失败';
-            }
+        new Blog(reqData).save(() => {
             resolve(resData);
         });
     })
@@ -55,11 +51,7 @@ function update(_id, data, msg) {
         }
         Blog.updateOne({
             _id
-        }, data, (err, res) => {
-            if (err) {
-                resData.code = -1;
-                resData.data = `${msg}失败`;
-            }
+        }, data, () => {
             resolve(resData);
         });
     })

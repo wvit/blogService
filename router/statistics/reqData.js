@@ -4,6 +4,8 @@ const {
 } = require("../../server/server");
 const ReqData = require('../../mongo/schema/reqData');
 const util = require("../../utils/util");
+
+//获取所有的请求
 router.all('*', async (ctx, next) => {
     const {
         req,
