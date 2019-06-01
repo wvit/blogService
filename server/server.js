@@ -23,7 +23,7 @@ mongoose.connect(dbs, {
   useNewUrlParser: true
 }, err => {
   const msg = err ? '数据库发生错误' : '数据库链接成功';
-  console.log(msg, dbs, err)
+  console.log(msg, dbs)
 });
 
 app.use(cors());

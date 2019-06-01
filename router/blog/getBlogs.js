@@ -19,14 +19,18 @@ router.get("/app/getBlogs", async ctx => {
 
 //查询博客
 function getBlogs(reqData) {
-    const pageSize = Number(reqData.pageSize);
-    const page = (Number(reqData.page) - 1) * 10;
-    const reg = new RegExp(reqData.key, 'i');
+    const {
+        pageSize,
+        page,
+        key,
+        tags,
+        classId
+    } = reqData;
     const queryRule = {
         isShow: true,
         $or: [{
             title: {
-                $regex: reg
+                $regex: new RegExp(key, 'i')
             }
         }]
     };
@@ -40,8 +44,8 @@ function getBlogs(reqData) {
         };
         Blog.countDocuments(queryRule, (err, count) => {
             Blog.find(queryRule)
-                .skip(page)
-                .limit(pageSize)
+                .skip((Number(page) - 1) * 10)
+                .limit(Number(pageSize))
                 .sort({
                     'addTime': -1
                 })

@@ -25,7 +25,7 @@ function getTags(reqData) {
             data: []
         };
         Tag.find({
-            status: reqData.status
+            status: reqData.status //1工作 2生活
         }).exec((err, data) => {
             resData.data = data;
             resolve(resData);
