@@ -22,17 +22,19 @@ function getBlogs(reqData) {
     const {
         pageSize,
         page,
-        key,
-        tags,
-        classId
+        key
     } = reqData;
+    const tags = reqData.tags ? JSON.parse(reqData.tags) : [];
     const queryRule = {
         isShow: true,
         $or: [{
             title: {
                 $regex: new RegExp(key, 'i')
             }
-        }]
+        }],
+        tags: {
+            [tags.length > 0 ? '$all' : '$ne']: tags
+        }
     };
     return new Promise(resolve => {
         const resData = {
@@ -42,18 +44,19 @@ function getBlogs(reqData) {
                 list: []
             }
         };
-        Blog.countDocuments(queryRule, (err, count) => {
-            Blog.find(queryRule)
-                .skip((Number(page) - 1) * 10)
-                .limit(Number(pageSize))
-                .sort({
-                    'addTime': -1
-                })
-                .exec((err, data) => {
-                    resData.data.count = count;
-                    resData.data.list = data;
-                    resolve(resData);
-                })
-        })
+        Blog.countDocuments(queryRule)
+            .exec((err, count) => {
+                Blog.find(queryRule)
+                    .skip((Number(page) - 1) * 10)
+                    .limit(Number(pageSize))
+                    .sort({
+                        'addTime': -1
+                    })
+                    .exec((err, data) => {
+                        resData.data.count = count;
+                        resData.data.list = data;
+                        resolve(resData);
+                    })
+            })
     })
 }

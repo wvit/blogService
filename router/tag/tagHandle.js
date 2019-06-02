@@ -32,9 +32,9 @@ function removeTag(reqData) {
             code: 0,
             data: `删除成功`
         }
-        Tag.remove({
+        Tag.deleteOne({
             _id: reqData.id
-        }, data, () => {
+        }, () => {
             resolve(resData);
         });
     })
