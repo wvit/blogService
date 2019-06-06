@@ -22,7 +22,9 @@ function getBlogs(reqData) {
     const {
         pageSize,
         page,
-        key
+        key = '',
+        model = 1,
+        classId,
     } = reqData;
     const tags = reqData.tags ? JSON.parse(reqData.tags) : [];
     const queryRule = {
@@ -32,9 +34,11 @@ function getBlogs(reqData) {
                 $regex: new RegExp(key, 'i')
             }
         }],
-        tags: {
-            [tags.length > 0 ? '$all' : '$ne']: tags
-        }
+        [Number(model) === 1 ? 'tags' : 'classId']: (() => {
+            return Number(model) === 1 ? {
+                [tags.length > 0 ? '$all' : '$ne']: tags
+            } : classId
+        })()
     };
     return new Promise(resolve => {
         const resData = {
