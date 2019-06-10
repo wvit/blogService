@@ -17,7 +17,7 @@ function getReqData(reqData) {
     const reg = new RegExp(reqData.key, 'i');
     const queryRule = {
         $or: [{
-            city: {
+            userAgent: {
                 $regex: reg
             }
         }]
