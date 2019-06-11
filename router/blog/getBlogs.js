@@ -24,7 +24,7 @@ function getBlogs(reqData) {
         page,
         key = '',
         model = 1,
-        classId,
+        classId = '',
     } = reqData;
     const tags = reqData.tags ? JSON.parse(reqData.tags) : [];
     const queryRule = {
@@ -37,6 +37,8 @@ function getBlogs(reqData) {
         [Number(model) === 1 ? 'tags' : 'classId']: (() => {
             return Number(model) === 1 ? {
                 [tags.length > 0 ? '$all' : '$ne']: tags
+            } : classId === '' ? {
+                $ne: ''
             } : classId
         })()
     };
