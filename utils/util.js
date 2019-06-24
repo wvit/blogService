@@ -47,5 +47,4 @@ module.exports = {
     const hour = ((time - day * dayTime) / 1000 / 60 / 60).toFixed(0);
     return `${day} 天 ${hour} 小时`;
   },
-
 }
