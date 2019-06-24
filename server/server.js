@@ -8,6 +8,8 @@ const static = require('koa-static');
 const bodyParser = require('koa-bodyparser');
 const mongoose = require('mongoose');
 const sslify = require('koa-sslify').default;
+const verifyLogin = require('../middleware/verifyLogin');
+
 const app = new Koa();
 const {
   dbs,
@@ -26,6 +28,7 @@ mongoose.connect(dbs, {
   console.log(msg, dbs)
 });
 
+app.use(verifyLogin);
 app.use(cors());
 app.use(bodyParser());
 app.use(router.routes());
